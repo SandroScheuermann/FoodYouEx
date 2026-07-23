@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.app.di
 
+import com.maksimowiczm.foodyou.ai.aiModule
 import com.maksimowiczm.foodyou.app.ui.uiModule
 import com.maksimowiczm.foodyou.changelog.changelogModule
 import com.maksimowiczm.foodyou.food.foodModule
@@ -23,6 +24,7 @@ fun initKoin(applicationCoroutineScope: CoroutineScope, config: KoinAppDeclarati
         modules(appModule(applicationCoroutineScope))
         modules(uiModule)
         modules(
+            aiModule,
             changelogModule,
             foodModule,
             foodSearchModule,

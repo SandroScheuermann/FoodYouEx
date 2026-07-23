@@ -5,9 +5,10 @@ Maksimowicz (the "Service Provider"). The Application is provided on an "AS IS" 
 
 ## Information Collection and Use
 
-The Application does not collect, store, or transmit any personal or non-personal information. All
-data entered or generated within the Application is processed locally on your device and is never
-sent to the Service Provider.
+The Service Provider does not collect or store personal or non-personal information entered in the
+Application. Most data is processed locally on your device. When you explicitly use an optional
+third-party feature, the data required for that feature may be sent directly from your device to the
+selected third-party service and is never sent to the Service Provider.
 
 ## Third-Party Services
 
@@ -31,8 +32,15 @@ privacy policies:
   Provider does not collect or store this data.*
 - [USDA FoodData Central (operated by the United States Department of Agriculture)](https://www.usda.gov/privacy-policy)</br>
   *You have the option to provide your own USDA API key. It is stored locally on your device and is
-  used exclusively to make requests to the service. The Service Provider does not collect or store
-  this API key.*
+   used exclusively to make requests to the service. The Service Provider does not collect or store
+   this API key.*
+- [Google Gemini API](https://ai.google.dev/gemini-api/terms)</br>
+  *You may provide your own Gemini API key to analyze meal or nutrition-label photos. The key is
+  encrypted and stored locally on your device. When you choose to analyze a photo, the image is sent
+  directly from your device to Google for that analysis. Food You does not persist the image or the
+  raw Gemini response and the Service Provider does not receive either. Google's terms and data
+  handling policies apply to these requests. You can remove the key from the Application settings at
+  any time.*
 - [GitHub](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)</br>
   *Used only if you choose to download sponsorship information in the Application.*
 
@@ -71,3 +79,7 @@ time.
 ### 26.03.2026
 
 - Added third-party service credential handling for Open Food Facts.
+
+### 22.07.2026
+
+- Added disclosure for optional meal-photo and nutrition-label analysis through Google Gemini.

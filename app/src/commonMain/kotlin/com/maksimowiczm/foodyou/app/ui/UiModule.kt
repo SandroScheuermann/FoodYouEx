@@ -1,5 +1,6 @@
 package com.maksimowiczm.foodyou.app.ui
 
+import com.maksimowiczm.foodyou.app.ui.ai.aiUi
 import com.maksimowiczm.foodyou.app.ui.changelog.changelog
 import com.maksimowiczm.foodyou.app.ui.database.database
 import com.maksimowiczm.foodyou.app.ui.food.diary.foodDiary
@@ -19,6 +20,7 @@ import org.koin.dsl.module
 val uiModule = module {
     viewModel { AppViewModel(settingsRepository = userPreferencesRepository()) }
 
+    aiUi()
     changelog()
     database()
     food()

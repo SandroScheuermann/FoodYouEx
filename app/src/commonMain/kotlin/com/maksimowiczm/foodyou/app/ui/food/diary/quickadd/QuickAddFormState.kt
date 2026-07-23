@@ -38,6 +38,7 @@ internal fun rememberQuickAddFormState(
     carbohydrates: Double? = null,
     fats: Double? = null,
     energy: Double? = null,
+    autoCalculateEnergy: Boolean? = null,
 ): QuickAddFormState {
     val energyFormatter = LocalEnergyFormatter.current
     val energyInUserUnit = energy?.let(energyFormatter::fromKcal)
@@ -92,8 +93,7 @@ internal fun rememberQuickAddFormState(
 
     val autoCalculateEnergyState =
         rememberSaveable(proteins, carbohydrates, fats, energy) {
-            val initialState =
-                if (energy == null || proteins == null || carbohydrates == null || fats == null) {
+            val initialState = autoCalculateEnergy ?: if (energy == null || proteins == null || carbohydrates == null || fats == null) {
                     true
                 } else {
                     NutrientsHelper.calculateEnergy(

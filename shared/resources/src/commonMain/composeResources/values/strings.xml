@@ -7,6 +7,10 @@
 
     <string name="headline_create_product">Create product</string>
     <string name="headline_settings">Settings</string>
+    <string name="headline_ai_features">AI features</string>
+    <string name="headline_meal_photo">Estimate meal from photo</string>
+    <string name="headline_nutrition_label_photo">Import nutrition label</string>
+    <string name="headline_gemini_api_key">Gemini API key</string>
     <string name="headline_daily_goals">Daily goals</string>
     <string name="headline_general">General</string>
     <string name="headline_macronutrients">Macronutrients</string>
@@ -136,6 +140,13 @@
     <string name="action_create">Create</string>
     <string name="action_clear">Clear</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_remove_ai_key">Remove key</string>
+    <string name="action_take_photo">Take photo</string>
+    <string name="action_choose_photo">Choose photo</string>
+    <string name="action_analyze_meal">Analyze meal</string>
+    <string name="action_analyze_label">Analyze label</string>
+    <string name="action_import_nutrition_label">Import label</string>
+    <string name="action_apply_values">Apply values</string>
     <string name="action_go_to_settings">Go to settings</string>
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
@@ -370,6 +381,20 @@
 
     <string name="headline_database">Database</string>
     <string name="description_manage_database">Manage your database</string>
+    <string name="description_ai_settings">Configure optional photo analysis</string>
+    <string name="description_ai_key">Use your own Gemini API key. The key is encrypted on this device and is never sent to Food You.</string>
+    <string name="description_ai_privacy">When you use photo analysis, the selected image is sent directly from this device to Google Gemini.</string>
+    <string name="description_ai_status_configured">Gemini key configured, ending in %1$s.</string>
+    <string name="description_ai_image_upload">The selected image will be sent directly to Google Gemini.</string>
+    <string name="description_meal_photo_framing">Keep the whole meal visible and use good lighting.</string>
+    <string name="description_total_weight_optional">Total weight in grams, if known</string>
+    <string name="description_ai_error_generic">The image could not be analyzed. Check your Gemini key, connection and quota, then try again.</string>
+    <string name="description_nutrition_label_framing">Frame only the nutrition table and keep all text readable.</string>
+    <string name="description_ai_values_review">Values imported by AI. Review the fields before creating the product.</string>
+    <string name="content_description_meal_camera">Photograph meal</string>
+    <string name="label_confidence">Confidence</string>
+    <string name="label_components">Detected components</string>
+    <string name="label_warnings">Warnings</string>
 
     <string name="action_done">Done</string>
 

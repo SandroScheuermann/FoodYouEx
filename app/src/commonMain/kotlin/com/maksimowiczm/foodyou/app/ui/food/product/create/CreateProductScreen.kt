@@ -1,6 +1,8 @@
 package com.maksimowiczm.foodyou.app.ui.food.product.create
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -9,10 +11,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.outlined.Save
+import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -38,6 +42,8 @@ internal fun CreateProductScreen(
     onBack: () -> Unit,
     onCreate: (ProductFormState) -> Unit,
     onDownload: () -> Unit,
+    onImportNutritionLabel: () -> Unit,
+    importedNutritionLabel: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
@@ -90,21 +96,47 @@ internal fun CreateProductScreen(
             contentPadding = paddingValues,
         ) {
             item {
-                AssistChip(
-                    onClick = onDownload,
-                    label = { Text(stringResource(Res.string.action_download_product)) },
+                Row(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Download,
-                            contentDescription = null,
-                            modifier = Modifier.size(AssistChipDefaults.IconSize),
-                        )
-                    },
-                )
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    AssistChip(
+                        onClick = onDownload,
+                        label = { Text(stringResource(Res.string.action_download_product)) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Download,
+                                contentDescription = null,
+                                modifier = Modifier.size(AssistChipDefaults.IconSize),
+                            )
+                        },
+                    )
+                    AssistChip(
+                        onClick = onImportNutritionLabel,
+                        label = {
+                            Text(stringResource(Res.string.action_import_nutrition_label))
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.CameraAlt,
+                                contentDescription = null,
+                                modifier = Modifier.size(AssistChipDefaults.IconSize),
+                            )
+                        },
+                    )
+                }
             }
 
             item { ProductForm(state = state, contentPadding = PaddingValues(horizontal = 16.dp)) }
+            if (importedNutritionLabel) {
+                item {
+                    Text(
+                        text = stringResource(Res.string.description_ai_values_review),
+                        modifier = Modifier.padding(16.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
         }
     }
 }

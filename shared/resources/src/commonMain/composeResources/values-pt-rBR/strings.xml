@@ -3,6 +3,10 @@
     <string name="not_available_short">N/A</string>
     <string name="headline_create_product">Criação de produto</string>
     <string name="headline_settings">Configurações</string>
+    <string name="headline_ai_features">Recursos de IA</string>
+    <string name="headline_gemini_api_key">Chave da API Gemini</string>
+    <string name="headline_meal_photo">Estimar refeição por foto</string>
+    <string name="headline_nutrition_label_photo">Importar tabela nutricional</string>
     <string name="headline_daily_goals">Metas diárias</string>
     <string name="headline_general">Geral</string>
     <string name="headline_macronutrients">Macronutrientes</string>
@@ -186,4 +190,25 @@
     <!-- Don't translate changelog strings -->
     <string name="notification_exporting_products">Exportando produtos</string>
     <string name="notification_importing_products">Importando produtos</string>
+    <string name="action_remove_ai_key">Remover chave</string>
+    <string name="action_take_photo">Tirar foto</string>
+    <string name="action_choose_photo">Escolher foto</string>
+    <string name="action_analyze_meal">Analisar refeição</string>
+    <string name="action_analyze_label">Analisar tabela</string>
+    <string name="action_import_nutrition_label">Importar tabela</string>
+    <string name="action_apply_values">Aplicar valores</string>
+    <string name="description_ai_settings">Configure a análise opcional de fotos</string>
+    <string name="description_ai_key">Use sua própria chave da API Gemini. A chave é criptografada neste dispositivo e nunca é enviada ao Food You.</string>
+    <string name="description_ai_privacy">Ao usar a análise por foto, a imagem selecionada é enviada diretamente deste dispositivo ao Google Gemini.</string>
+    <string name="description_ai_status_configured">Chave Gemini configurada, terminando em %1$s.</string>
+    <string name="description_ai_image_upload">A imagem selecionada será enviada diretamente ao Google Gemini.</string>
+    <string name="description_meal_photo_framing">Mantenha toda a refeição visível e use uma boa iluminação.</string>
+    <string name="description_total_weight_optional">Peso total em gramas, se conhecido</string>
+    <string name="description_ai_error_generic">Não foi possível analisar a imagem. Verifique sua chave Gemini, conexão e cota e tente novamente.</string>
+    <string name="description_nutrition_label_framing">Enquadre somente a tabela nutricional e mantenha todo o texto legível.</string>
+    <string name="description_ai_values_review">Valores importados por IA. Revise os campos antes de criar o produto.</string>
+    <string name="content_description_meal_camera">Fotografar refeição</string>
+    <string name="label_confidence">Confiança</string>
+    <string name="label_components">Componentes detectados</string>
+    <string name="label_warnings">Alertas</string>
 </resources>
