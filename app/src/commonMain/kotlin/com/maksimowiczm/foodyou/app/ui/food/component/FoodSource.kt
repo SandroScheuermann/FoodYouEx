@@ -38,6 +38,7 @@ fun FoodSource.Type.Icon(modifier: Modifier = Modifier) {
                 modifier = modifier.size(24.dp),
             )
 
+        FoodSource.Type.Taco -> Text("TACO", modifier)
         FoodSource.Type.SwissFoodCompositionDatabase -> Text("CH", modifier)
     }
 }
@@ -48,6 +49,7 @@ fun FoodSource.Type.stringResource(): String =
         FoodSource.Type.User -> stringResource(Res.string.headline_user)
         FoodSource.Type.OpenFoodFacts -> stringResource(Res.string.headline_open_food_facts)
         FoodSource.Type.USDA -> stringResource(Res.string.headline_food_data_central_usda)
+        FoodSource.Type.Taco -> stringResource(Res.string.headline_taco)
         FoodSource.Type.SwissFoodCompositionDatabase ->
             stringResource(Res.string.headline_swiss_food_composition_database)
     }

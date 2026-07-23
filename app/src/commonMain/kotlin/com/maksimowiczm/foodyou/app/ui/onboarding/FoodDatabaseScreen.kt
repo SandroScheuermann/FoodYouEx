@@ -100,6 +100,14 @@ internal fun FoodDatabaseScreen(
                 }
 
                 item {
+                    TacoDatabase(
+                        selected = state.useTaco,
+                        onSelectedChange = { state.useTaco = it },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+
+                item {
                     SwissFoodCompositionDatabase(
                         languages = state.swissLanguages,
                         onLanguageChange = { state.swissLanguages = it },
@@ -233,6 +241,41 @@ private fun SwissFoodCompositionDatabase(
                     )
                 },
                 selected = Language.ITALIAN in languages,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TacoDatabase(
+    selected: Boolean,
+    onSelectedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    DatabaseCard(
+        title = {
+            Text(
+                text = stringResource(Res.string.headline_taco),
+                style = MaterialTheme.typography.titleSmall,
+            )
+        },
+        modifier = modifier,
+    ) {
+        Column {
+            Text(
+                text = stringResource(Res.string.description2_taco),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(8.dp))
+            LanguageButton(
+                label =
+                    stringResource(
+                        if (selected) Res.string.action_selected_taco
+                        else Res.string.action_select_taco
+                    ),
+                onClick = { onSelectedChange(!selected) },
+                selected = selected,
             )
         }
     }

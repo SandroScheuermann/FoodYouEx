@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Bolt
+import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
@@ -61,6 +62,7 @@ internal fun MealCard(
     meal: MealModel,
     onAddFood: () -> Unit,
     onQuickAdd: () -> Unit,
+    onPhoto: () -> Unit,
     onEditEntry: (MealEntryModel) -> Unit,
     onDeleteEntry: (MealEntryModel) -> Unit,
     onLongClick: () -> Unit,
@@ -175,6 +177,20 @@ internal fun MealCard(
                 }
 
                 Spacer(Modifier.weight(1f))
+                FilledTonalIconButton(
+                    onClick = onPhoto,
+                    shapes =
+                        IconButtonDefaults.shapes(
+                            MaterialTheme.shapes.medium,
+                            MaterialTheme.shapes.extraSmall,
+                        ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.CameraAlt,
+                        contentDescription =
+                            stringResource(Res.string.content_description_meal_camera),
+                    )
+                }
                 FilledTonalIconButton(
                     onClick = onQuickAdd,
                     shapes =

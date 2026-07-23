@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.maksimowiczm.foodyou.common.domain.userpreferences.UserPreferencesRepository
 import com.maksimowiczm.foodyou.food.search.domain.FoodSearchPreferences
 import com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.domain.ImportSwissFoodCompositionDatabaseUseCase
+import com.maksimowiczm.foodyou.importexport.taco.domain.ImportTacoUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.last
@@ -14,6 +15,7 @@ import kotlinx.coroutines.sync.withLock
 
 internal class OnboardingViewModel(
     private val importSwissUseCase: ImportSwissFoodCompositionDatabaseUseCase,
+    private val importTacoUseCase: ImportTacoUseCase,
     private val foodSearchPreferencesRepository: UserPreferencesRepository<FoodSearchPreferences>,
 ) : ViewModel() {
     private val eventBus = MutableStateFlow<OnboardingEvent?>(null)
@@ -28,6 +30,7 @@ internal class OnboardingViewModel(
 
         val useOpenFoodFacts = state.useOpenFoodFacts
         val useUsda = state.useUsda
+        val useTaco = state.useTaco
         val languages = state.swissLanguages
 
         viewModelScope.launch {
@@ -41,6 +44,10 @@ internal class OnboardingViewModel(
 
                 if (languages.isNotEmpty()) {
                     importSwissUseCase.import(languages).last()
+                }
+
+                if (useTaco) {
+                    importTacoUseCase.import().last()
                 }
 
                 eventBus.emit(OnboardingEvent.Finished)

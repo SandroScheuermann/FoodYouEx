@@ -6,6 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.maksimowiczm.foodyou.ai.domain.repository.AiCredentialsRepository
+import com.maksimowiczm.foodyou.app.ui.ai.AiSettingsScreen
+import com.maksimowiczm.foodyou.app.ui.food.diary.mealphoto.MealPhotoScreen
 import com.maksimowiczm.foodyou.app.ui.about.AboutScreen
 import com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.ExportCsvProductsScreen
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.ExternalDatabasesScreen
@@ -14,6 +18,7 @@ import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.UpdateUsdaApiK
 import com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.ImportCsvProductsScreen
 import com.maksimowiczm.foodyou.app.ui.database.master.DatabaseSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.SwissFoodCompositionDatabaseScreen
+import com.maksimowiczm.foodyou.app.ui.database.taco.TacoScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.add.AddEntryScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
@@ -44,10 +49,14 @@ import com.maksimowiczm.foodyou.common.domain.measurement.type
 import com.maksimowiczm.foodyou.food.domain.entity.FoodId
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Composable
 fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val aiCredentialsRepository: AiCredentialsRepository = koinInject()
+    val aiCredentials by aiCredentialsRepository.observeCredentials().collectAsStateWithLifecycle(null)
+    val hasAiCredentials = aiCredentials != null
 
     NavHost(modifier = modifier, navController = navController, startDestination = Home) {
         forwardBackwardComposable<Home> {
@@ -60,6 +69,13 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 },
                 onMealCardQuickAddClick = { epochDay, mealId ->
                     navController.navigateSingleTop(FoodDiaryCreateQuickAdd(epochDay, mealId))
+                },
+                onMealCardPhotoClick = { epochDay, mealId ->
+                    if (hasAiCredentials) {
+                        navController.navigateSingleTop(FoodDiaryMealPhoto(epochDay, mealId))
+                    } else {
+                        navController.navigateSingleTop(AiSettings)
+                    }
                 },
                 onGoalsCardLongClick = { navController.navigateSingleTop(GoalsPersonalization) },
                 onGoalsCardClick = { epochDate ->
@@ -92,7 +108,11 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onGoals = { navController.navigateSingleTop(GoalsSetup) },
                 onPersonalization = { navController.navigateSingleTop(Personalization) },
                 onDatabase = { navController.navigateSingleTop(DatabaseSettings) },
+                onAiSettings = { navController.navigateSingleTop(AiSettings) },
             )
+        }
+        forwardBackwardComposable<AiSettings> {
+            AiSettingsScreen(onBack = { navController.popBackStackInclusive<AiSettings>() })
         }
         forwardBackwardComposable<Language> {
             LanguageScreen(onBack = { navController.popBackStackInclusive<Language>() })
@@ -132,6 +152,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<ExternalDatabases> {
             ExternalDatabasesScreen(
                 onBack = { navController.popBackStackInclusive<ExternalDatabases>() },
+                onTaco = { navController.navigateSingleTop(Taco) },
                 onSwissFoodCompositionDatabase = {
                     navController.navigateSingleTop(SwissFoodCompositionDatabase)
                 },
@@ -141,6 +162,9 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             SwissFoodCompositionDatabaseScreen(
                 onBack = { navController.popBackStackInclusive<SwissFoodCompositionDatabase>() }
             )
+        }
+        forwardBackwardComposable<Taco> {
+            TacoScreen(onBack = { navController.popBackStackInclusive<Taco>() })
         }
         forwardBackwardComposable<ImportCsvProducts> {
             ImportCsvProductsScreen(
@@ -175,6 +199,15 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onSave = { navController.popBackStackInclusive<FoodDiaryCreateQuickAdd>() },
                 date = LocalDate.fromEpochDays(epochDay),
                 mealId = mealId,
+            )
+        }
+        forwardBackwardComposable<FoodDiaryMealPhoto> {
+            val (epochDay, mealId) = it.toRoute<FoodDiaryMealPhoto>()
+            MealPhotoScreen(
+                date = LocalDate.fromEpochDays(epochDay),
+                mealId = mealId,
+                onBack = { navController.popBackStackInclusive<FoodDiaryMealPhoto>() },
+                onSaved = { navController.popBackStackInclusive<FoodDiaryMealPhoto>() },
             )
         }
         forwardBackwardComposable<UpdateQuickAdd> {
@@ -294,6 +327,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
                 onUpdateOpenFoodFactsCredentials = {
                     navController.navigateSingleTop(OpenFoodFactsLogin)
                 },
+                onAiSettings = { navController.navigateSingleTop(AiSettings) },
+                hasAiCredentials = hasAiCredentials,
             )
         }
         forwardBackwardComposable<FoodDiaryCreateEntry> {
@@ -386,6 +421,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 
 @Serializable private object Settings
 
+@Serializable private object AiSettings
+
 @Serializable private object About
 
 @Serializable private object Language
@@ -405,6 +442,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExternalDatabases
 
 @Serializable private object SwissFoodCompositionDatabase
+@Serializable private object Taco
 
 @Serializable private object UsdaApiKey
 
@@ -415,6 +453,8 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExportCsvProducts
 
 @Serializable private data class FoodDiaryCreateQuickAdd(val epochDay: Long, val mealId: Long)
+
+@Serializable private data class FoodDiaryMealPhoto(val epochDay: Long, val mealId: Long)
 
 @Serializable private data class UpdateQuickAdd(val quickAddId: Long)
 

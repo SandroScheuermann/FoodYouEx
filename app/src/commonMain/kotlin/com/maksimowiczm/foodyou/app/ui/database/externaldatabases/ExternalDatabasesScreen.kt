@@ -42,6 +42,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun ExternalDatabasesScreen(
     onBack: () -> Unit,
+    onTaco: () -> Unit,
     onSwissFoodCompositionDatabase: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,6 +51,7 @@ fun ExternalDatabasesScreen(
 
     ExternalDatabasesScreen(
         onBack = onBack,
+        onTaco = onTaco,
         model = model,
         onOpenFoodFactsChange = viewModel::toggleOpenFoodFacts,
         onUsdaChange = viewModel::toggleUsda,
@@ -61,6 +63,7 @@ fun ExternalDatabasesScreen(
 @Composable
 private fun ExternalDatabasesScreen(
     onBack: () -> Unit,
+    onTaco: () -> Unit,
     model: FoodPreferencesModel,
     onOpenFoodFactsChange: (Boolean) -> Unit,
     onUsdaChange: (Boolean) -> Unit,
@@ -109,12 +112,51 @@ private fun ExternalDatabasesScreen(
             }
 
             item {
+                TacoDatabase(onClick = onTaco, modifier = Modifier.fillMaxWidth())
+            }
+
+            item {
                 SwissFoodCompositionDatabase(
                     onClick = onSwissFoodCompositionDatabase,
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun TacoDatabase(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    DatabaseCard(
+        title = {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    text = stringResource(Res.string.headline_taco),
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription = null,
+                    )
+                }
+            }
+        },
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 16.dp, top = 8.dp, end = 8.dp, bottom = 16.dp),
+        onClick = onClick,
+    ) {
+        Text(
+            text = stringResource(Res.string.description_taco_short),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(8.dp))
+        FeaturesContainer { ManualImport() }
     }
 }
 

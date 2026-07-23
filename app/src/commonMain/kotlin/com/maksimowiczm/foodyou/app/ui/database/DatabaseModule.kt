@@ -4,6 +4,7 @@ import com.maksimowiczm.foodyou.app.ui.database.exportcsvproducts.exportCsvProdu
 import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.externalDatabasesModule
 import com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.importCsvProductsModule
 import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.swissFoodCompositionDatabaseModule
+import com.maksimowiczm.foodyou.app.ui.database.taco.tacoModule
 import org.koin.core.module.Module
 
 fun Module.database() {
@@ -11,4 +12,5 @@ fun Module.database() {
     externalDatabasesModule()
     importCsvProductsModule()
     swissFoodCompositionDatabaseModule()
+    tacoModule()
 }

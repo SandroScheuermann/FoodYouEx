@@ -16,6 +16,7 @@ import com.maksimowiczm.foodyou.app.ui.common.form.stringParser
 import com.maksimowiczm.foodyou.app.ui.common.utility.EnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.LocalEnergyFormatter
 import com.maksimowiczm.foodyou.app.ui.common.utility.Saver
+import com.maksimowiczm.foodyou.app.ui.food.product.nutritionlabel.NormalizedNutritionLabel
 import com.maksimowiczm.foodyou.common.compose.utility.formatClipZeros
 import com.maksimowiczm.foodyou.common.domain.food.FoodSource
 import com.maksimowiczm.foodyou.common.domain.food.NutrientValue.Companion.toNutrientValue
@@ -1186,6 +1187,24 @@ internal class ProductFormState(
     var measurement: Measurement by measurementState
     val isModified: Boolean by isModifiedState
     var autoCalculateEnergy: Boolean by autoCalculateEnergyState
+
+    fun applyNutritionLabel(label: NormalizedNutritionLabel) {
+        autoCalculateEnergy = false
+        measurement = Measurement.Gram(100.0)
+        label.protein?.let {
+            proteins.textFieldState.setTextAndPlaceCursorAtEnd(it.formatClipZeros("%.3f"))
+        }
+        label.carbs?.let {
+            carbohydrates.textFieldState.setTextAndPlaceCursorAtEnd(it.formatClipZeros("%.3f"))
+        }
+        label.fat?.let {
+            fats.textFieldState.setTextAndPlaceCursorAtEnd(it.formatClipZeros("%.3f"))
+        }
+        label.energy?.let {
+            val displayed = energyFormatter.fromKcal(it)
+            energy.textFieldState.setTextAndPlaceCursorAtEnd(displayed.formatClipZeros("%.3f"))
+        }
+    }
 }
 
 internal fun ProductFormState.nutritionFacts(multiplier: Float) =

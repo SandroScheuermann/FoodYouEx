@@ -15,6 +15,8 @@ fun CreateProductScreen(
     onCreate: (FoodId.Product) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
+    onAiSettings: () -> Unit,
+    hasAiCredentials: Boolean,
     modifier: Modifier = Modifier,
     url: String? = null,
 ) {
@@ -32,6 +34,8 @@ fun CreateProductScreen(
         onCreate = viewModel::createProduct,
         onUpdateUsdaApiKey = onUpdateUsdaApiKey,
         onUpdateOpenFoodFactsCredentials = onUpdateOpenFoodFactsCredentials,
+        onAiSettings = onAiSettings,
+        hasAiCredentials = hasAiCredentials,
         modifier = modifier,
         url = url,
     )

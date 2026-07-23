@@ -3,6 +3,7 @@ package com.maksimowiczm.foodyou.app.ui.food.product.create
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,6 +16,7 @@ import com.maksimowiczm.foodyou.app.ui.food.product.download.DownloadProductHold
 import com.maksimowiczm.foodyou.app.ui.food.product.download.DownloadProductScreen
 import com.maksimowiczm.foodyou.app.ui.food.product.download.DownloadProductViewModel
 import com.maksimowiczm.foodyou.app.ui.food.product.rememberProductFormState
+import com.maksimowiczm.foodyou.app.ui.food.product.nutritionlabel.NutritionLabelDialog
 import com.maksimowiczm.foodyou.common.compose.extension.LaunchedCollectWithLifecycle
 import com.maksimowiczm.foodyou.common.compose.utility.LocalClipboardManager
 import foodyou.app.generated.resources.*
@@ -29,6 +31,8 @@ internal fun CreateProductApp(
     onCreate: (ProductFormState) -> Unit,
     onUpdateUsdaApiKey: () -> Unit,
     onUpdateOpenFoodFactsCredentials: () -> Unit,
+    onAiSettings: () -> Unit,
+    hasAiCredentials: Boolean,
     modifier: Modifier = Modifier,
     url: String? = null,
 ) =
@@ -49,6 +53,19 @@ internal fun CreateProductApp(
                         null -> rememberProductFormState()
                         else -> rememberProductFormState(product)
                     }
+                var showNutritionLabel by rememberSaveable { mutableStateOf(false) }
+                var importedNutritionLabel by rememberSaveable { mutableStateOf(false) }
+                if (showNutritionLabel) {
+                    NutritionLabelDialog(
+                        hasAiCredentials = hasAiCredentials,
+                        onConfigureAi = onAiSettings,
+                        onDismissRequest = { showNutritionLabel = false },
+                        onApply = {
+                            state.applyNutritionLabel(it)
+                            importedNutritionLabel = true
+                        },
+                    )
+                }
 
                 CreateProductScreen(
                     state = state,
@@ -57,6 +74,8 @@ internal fun CreateProductApp(
                     onDownload = {
                         navController.navigate(Download(null)) { launchSingleTop = true }
                     },
+                    onImportNutritionLabel = { showNutritionLabel = true },
+                    importedNutritionLabel = importedNutritionLabel,
                 )
             }
             forwardBackwardComposable<Download> {

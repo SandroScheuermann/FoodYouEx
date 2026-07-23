@@ -8,6 +8,7 @@ fun Module.onboarding() {
     viewModel {
         OnboardingViewModel(
             importSwissUseCase = get(),
+            importTacoUseCase = get(),
             foodSearchPreferencesRepository = userPreferencesRepository(),
         )
     }

@@ -8,12 +8,14 @@ import com.maksimowiczm.foodyou.importexport.swissfoodcompositiondatabase.domain
 internal fun rememberOnboardingState(): OnboardingState {
     val openFoodFactsState = rememberSaveable { mutableStateOf(false) }
     val usdaState = rememberSaveable { mutableStateOf(false) }
+    val tacoState = rememberSaveable { mutableStateOf(false) }
     val swissLanguagesState = rememberSaveable { mutableStateOf<Set<Language>>(emptySet()) }
 
-    return remember(openFoodFactsState, usdaState, swissLanguagesState) {
+    return remember(openFoodFactsState, usdaState, tacoState, swissLanguagesState) {
         OnboardingState(
             openFoodFactsState = openFoodFactsState,
             usdaState = usdaState,
+            tacoState = tacoState,
             swissLanguagesState = swissLanguagesState,
         )
     }
@@ -22,9 +24,11 @@ internal fun rememberOnboardingState(): OnboardingState {
 internal class OnboardingState(
     openFoodFactsState: MutableState<Boolean>,
     usdaState: MutableState<Boolean>,
+    tacoState: MutableState<Boolean>,
     swissLanguagesState: MutableState<Set<Language>>,
 ) {
     var useOpenFoodFacts by openFoodFactsState
     var useUsda by usdaState
+    var useTaco by tacoState
     var swissLanguages by swissLanguagesState
 }
