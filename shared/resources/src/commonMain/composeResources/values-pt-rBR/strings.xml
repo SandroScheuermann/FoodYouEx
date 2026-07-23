@@ -211,4 +211,9 @@
     <string name="label_confidence">Confiança</string>
     <string name="label_components">Componentes detectados</string>
     <string name="label_warnings">Alertas</string>
+    <string name="headline_taco" translatable="false">TACO</string>
+    <string name="description_taco_short">A TACO contém informações nutricionais de 597 alimentos brasileiros da 4ª edição da Tabela Brasileira de Composição de Alimentos.</string>
+    <string name="description2_taco">A TACO contém informações nutricionais de 597 alimentos brasileiros da 4ª edição da Tabela Brasileira de Composição de Alimentos. Importe esses alimentos para a base local do app.</string>
+    <string name="action_select_taco">Selecionar</string>
+    <string name="action_selected_taco">Selecionada</string>
 </resources>

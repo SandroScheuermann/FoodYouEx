@@ -18,6 +18,7 @@ import com.maksimowiczm.foodyou.app.ui.database.externaldatabases.UpdateUsdaApiK
 import com.maksimowiczm.foodyou.app.ui.database.importcsvproducts.ImportCsvProductsScreen
 import com.maksimowiczm.foodyou.app.ui.database.master.DatabaseSettingsScreen
 import com.maksimowiczm.foodyou.app.ui.database.swissfoodcompositiondatabase.SwissFoodCompositionDatabaseScreen
+import com.maksimowiczm.foodyou.app.ui.database.taco.TacoScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.add.AddEntryScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.CreateQuickAddScreen
 import com.maksimowiczm.foodyou.app.ui.food.diary.quickadd.UpdateQuickAddScreen
@@ -151,6 +152,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
         forwardBackwardComposable<ExternalDatabases> {
             ExternalDatabasesScreen(
                 onBack = { navController.popBackStackInclusive<ExternalDatabases>() },
+                onTaco = { navController.navigateSingleTop(Taco) },
                 onSwissFoodCompositionDatabase = {
                     navController.navigateSingleTop(SwissFoodCompositionDatabase)
                 },
@@ -160,6 +162,9 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
             SwissFoodCompositionDatabaseScreen(
                 onBack = { navController.popBackStackInclusive<SwissFoodCompositionDatabase>() }
             )
+        }
+        forwardBackwardComposable<Taco> {
+            TacoScreen(onBack = { navController.popBackStackInclusive<Taco>() })
         }
         forwardBackwardComposable<ImportCsvProducts> {
             ImportCsvProductsScreen(
@@ -437,6 +442,7 @@ fun FoodYouAppNavHost(onDatabaseBackup: () -> Unit, modifier: Modifier = Modifie
 @Serializable private object ExternalDatabases
 
 @Serializable private object SwissFoodCompositionDatabase
+@Serializable private object Taco
 
 @Serializable private object UsdaApiKey
 

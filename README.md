@@ -40,7 +40,7 @@ The above signature is also valid for the F-Droid, thanks to [reproducible build
 - 🔒 **Privacy First** – No account required, all data stored locally on your device
 - 🧩 **Modular Home Screen** – Customize your home view with functional cards that suit your habits
 - 📚 **Comprehensive Food Databases** – Seamlessly integrates Open Food Facts, USDA FoodData Central,
-  and Swiss Food Composition Database
+  TACO, and Swiss Food Composition Database
 - 🧪 **Full Nutrition Tracking** – Set and track personalized nutrition targets, monitoring not only
   calories and macros but also vitamins, minerals, and other essential nutrients
 - 🍲 **Recipe Creation** – Create custom recipes by combining foods, with nutrition calculated

@@ -129,6 +129,16 @@ internal class FoodSearchViewModel(
             )
         }
 
+    private val tacoPages = observeFoodPages(FoodSource.Type.Taco).cachedIn(viewModelScope)
+    private val tacoState =
+        observeFoodCount(FoodSource.Type.Taco).map { count ->
+            FoodSourceUiState(
+                remoteEnabled = RemoteStatus.LocalOnly,
+                pages = tacoPages,
+                count = count,
+            )
+        }
+
     private fun observeFoodCount(source: FoodSource.Type) =
         searchQuery.flatMapLatest { query ->
             foodSearchRepository.searchFoodCount(
@@ -153,46 +163,46 @@ internal class FoodSearchViewModel(
                 initialValue = emptyList(),
             )
 
-    val uiState =
+    private val primaryStates =
         combine(
-                recentFoodState,
-                yourFoodState,
-                openFoodFactsState,
-                usdaState,
-                swissState,
-                filter,
-                searchHistory,
-            ) {
-                recentFoodState,
-                yourFoodState,
-                openFoodFactsState,
-                usdaState,
-                swissState,
+            recentFoodState,
+            yourFoodState,
+            openFoodFactsState,
+        ) { recent, yourFood, openFoodFacts -> Triple(recent, yourFood, openFoodFacts) }
+
+    private val localStates =
+        combine(usdaState, tacoState, swissState) { usda, taco, swiss -> Triple(usda, taco, swiss) }
+
+    val uiState =
+        combine(primaryStates, localStates, filter, searchHistory) {
+                (recentFoodState, yourFoodState, openFoodFactsState),
+                (usdaState, tacoState, swissState),
                 filter,
                 searchHistory ->
-                FoodSearchUiState(
-                    sources =
-                        mapOf(
-                            FoodFilter.Source.Recent to recentFoodState,
-                            FoodFilter.Source.YourFood to yourFoodState,
-                            FoodFilter.Source.OpenFoodFacts to openFoodFactsState,
-                            FoodFilter.Source.USDA to usdaState,
-                            FoodFilter.Source.SwissFoodCompositionDatabase to swissState,
-                        ),
-                    filter = filter,
-                    recentSearches = searchHistory.map { it.query },
-                )
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(2_000),
-                initialValue =
-                    FoodSearchUiState(
-                        sources = emptyMap(),
-                        filter = FoodFilter(),
-                        recentSearches = emptyList(),
+            FoodSearchUiState(
+                sources =
+                    mapOf(
+                        FoodFilter.Source.Recent to recentFoodState,
+                        FoodFilter.Source.YourFood to yourFoodState,
+                        FoodFilter.Source.OpenFoodFacts to openFoodFactsState,
+                        FoodFilter.Source.USDA to usdaState,
+                        FoodFilter.Source.Taco to tacoState,
+                        FoodFilter.Source.SwissFoodCompositionDatabase to swissState,
                     ),
+                filter = filter,
+                recentSearches = searchHistory.map { it.query },
             )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(2_000),
+            initialValue =
+                FoodSearchUiState(
+                    sources = emptyMap(),
+                    filter = FoodFilter(),
+                    recentSearches = emptyList(),
+                ),
+        )
 
     init {
         searchQuery

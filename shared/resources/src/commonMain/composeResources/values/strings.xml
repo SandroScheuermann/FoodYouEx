@@ -293,6 +293,12 @@
     <string name="description_swiss_food_composition_database_short">Swiss Food Composition Database includes nutritional information for over 1,100 general food products</string>
     <string name="description2_swiss_food_composition_database">Swiss Food Composition Database includes nutritional information for over 1,100 general food products. It is available in four languages. To import these products into your food diary, please select your preferred languages.</string>
 
+    <string name="headline_taco" translatable="false">TACO</string>
+    <string name="description_taco_short">TACO includes nutritional information for 597 Brazilian foods from the 4th edition of the Brazilian Food Composition Table.</string>
+    <string name="description2_taco">TACO includes nutritional information for 597 Brazilian foods from the 4th edition of the Brazilian Food Composition Table. Import these foods into your local food database.</string>
+    <string name="action_select_taco">Select</string>
+    <string name="action_selected_taco">Selected</string>
+
     <string name="headline_external_databases">External databases</string>
     <string name="description_external_databases">Check out supported databases</string>
 
